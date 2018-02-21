@@ -6,11 +6,11 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatRoom implements IChatRoom {
+public class ChatRoomImpl implements IChatRoom {
 
     public List<IClient> clients = null;
 
-    public ChatRoom() {
+    public ChatRoomImpl() {
         clients = new ArrayList<>();
      }
 
