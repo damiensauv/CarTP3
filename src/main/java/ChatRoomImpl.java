@@ -15,7 +15,8 @@ public class ChatRoomImpl implements IChatRoom {
      }
 
     public void register(IClient client) throws RemoteException {
-        System.out.println("Client Register");
+        System.out.println("Client Register : ");
+        System.out.println(client.getPseudo());
     }
 
     @Override

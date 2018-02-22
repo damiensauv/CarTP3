@@ -5,17 +5,15 @@ import java.rmi.RemoteException;
 
 public interface IClient extends Remote {
 
-    public void setPseudo(String pseudo);
+    public void setPseudo(String pseudo) throws RemoteException;
 
-    public String getPseudo();
+    public String getPseudo() throws RemoteException;
 
-    public void setPassword(String password);
+    public void setPassword(String password) throws RemoteException;
 
-    public String getPassword();
+    public String getPassword() throws RemoteException;
 
-    public boolean isConnected();
 
-    public void setConnected(boolean connected);
 
     public void receive(IMessage message) throws RemoteException;
 }

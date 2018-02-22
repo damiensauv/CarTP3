@@ -9,13 +9,14 @@ public class Serveur {
 
     public static void main(String[] args) {
         try {
-            IChatRoom chatRoom = (IChatRoom) UnicastRemoteObject.exportObject(new ChatRoom(), 4000);
-            LocateRegistry.createRegistry(4000);
-            LocateRegistry.getRegistry().bind("myServer", chatRoom);
+
+            IChatRoom chatRoom = (IChatRoom) UnicastRemoteObject.exportObject(new ChatRoomImpl(), 4001);
+            LocateRegistry.createRegistry(4001);
+            LocateRegistry.getRegistry("127.0.0.1", 4001).rebind("myServer", chatRoom);
 
             System.out.println("Serveur launch");
 
-        } catch (RemoteException | AlreadyBoundException e) {
+        } catch (RemoteException e) {
             e.printStackTrace();
         }
     }

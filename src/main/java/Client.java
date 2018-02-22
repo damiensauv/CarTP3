@@ -1,58 +1,45 @@
-import Interface.IChatRoom;
 import Interface.IClient;
 import Interface.IMessage;
 
-import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 
-public class Client implements IClient {
+public class Client extends UnicastRemoteObject implements IClient {
 
     private String pseudo;
     private String password;
-    private boolean connected;
+
+
+    public Client(String pseudo, String password) throws RemoteException {
+        super();
+        this.pseudo = pseudo;
+        this.password = password;
+    }
 
     @Override
-    public void setPseudo(String pseudo) {
+    public void setPseudo(String pseudo) throws RemoteException {
 
     }
 
     @Override
-    public String getPseudo() {
+    public String getPseudo() throws RemoteException {
+        return this.pseudo;
+    }
+
+    @Override
+    public void setPassword(String password) throws RemoteException {
+
+    }
+
+    @Override
+    public String getPassword() throws RemoteException {
         return null;
     }
 
-    @Override
-    public void setPassword(String password) {
-
-    }
-
-    @Override
-    public String getPassword() {
-        return null;
-    }
-
-    @Override
-    public boolean isConnected() {
-        return false;
-    }
-
-    @Override
-    public void setConnected(boolean connected) {
-
-    }
 
     @Override
     public void receive(IMessage message) throws RemoteException {
-
-    }
-
-    public static void main(String[] args) throws Exception {
-        IClient client = new Client();
-        client.setPseudo("dam");
-
-        IChatRoom chatRoom = (IChatRoom) Naming.lookup("myServer");
-        chatRoom.register(new Client());
-
+        System.out.println("Message Yolo");
     }
 
 }
