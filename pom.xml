@@ -18,6 +18,33 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <executions>
+                    <execution>
+                        <id>Server</id>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>Serveur</mainClass>
+                            <includePluginDependencies>false</includePluginDependencies>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>Client</id>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>ClientMain</mainClass>
+                            <includePluginDependencies>false</includePluginDependencies>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -32,6 +59,7 @@
                     </execution>
                 </executions>
             </plugin>
+
 
 
         </plugins>

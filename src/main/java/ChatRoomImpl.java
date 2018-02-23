@@ -3,16 +3,18 @@ import Interface.IClient;
 import Interface.IMessage;
 
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatRoomImpl implements IChatRoom {
+public class ChatRoomImpl extends UnicastRemoteObject implements IChatRoom {
 
     public List<IClient> clients = null;
 
-    public ChatRoomImpl() {
-        clients = new ArrayList<>();
-     }
+    public ChatRoomImpl() throws RemoteException {
+        super();
+        clients = new ArrayList<IClient>();
+    }
 
     public void register(IClient client) throws RemoteException {
         System.out.println("Client Register : ");
