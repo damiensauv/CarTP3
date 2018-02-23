@@ -9,6 +9,8 @@ public interface IChatRoom extends Remote {
 
     public void send(IMessage message) throws RemoteException;
 
+    public void connect(IClient client) throws RemoteException;
+
     public void disconnect(IClient client) throws RemoteException;
 
 }

@@ -13,8 +13,6 @@ public class Serveur {
             LocateRegistry.createRegistry(4001);
             LocateRegistry.getRegistry("127.0.0.1", 4001).rebind("myServer", chatRoom);
 
-            System.out.println("Serveur launch");
-
         } catch (RemoteException e) {
             e.printStackTrace();
         }

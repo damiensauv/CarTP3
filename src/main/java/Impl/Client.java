@@ -11,16 +11,10 @@ public class Client extends UnicastRemoteObject implements IClient {
     private String pseudo;
     private String password;
 
-
     public Client(String pseudo, String password) throws RemoteException {
         super();
         this.pseudo = pseudo;
         this.password = password;
-    }
-
-    @Override
-    public void setPseudo(String pseudo) throws RemoteException {
-
     }
 
     @Override
@@ -29,19 +23,13 @@ public class Client extends UnicastRemoteObject implements IClient {
     }
 
     @Override
-    public void setPassword(String password) throws RemoteException {
-
-    }
-
-    @Override
     public String getPassword() throws RemoteException {
-        return null;
+        return this.password;
     }
-
 
     @Override
     public void receive(IMessage message) throws RemoteException {
-        System.out.println("Message Yolo");
+        System.out.println("Message Yolo"); // message => ToString
     }
 
 }
