@@ -34,7 +34,7 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>Client</id>
+                        <id>Impl.Client</id>
                         <goals>
                             <goal>java</goal>
                         </goals>

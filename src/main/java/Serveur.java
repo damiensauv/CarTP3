@@ -1,3 +1,4 @@
+import Impl.ChatRoomImpl;
 import Interface.IChatRoom;
 
 import java.rmi.RemoteException;

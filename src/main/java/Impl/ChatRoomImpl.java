@@ -1,3 +1,5 @@
+package Impl;
+
 import Interface.IChatRoom;
 import Interface.IClient;
 import Interface.IMessage;
@@ -17,7 +19,7 @@ public class ChatRoomImpl extends UnicastRemoteObject implements IChatRoom {
     }
 
     public void register(IClient client) throws RemoteException {
-        System.out.println("Client Register : ");
+        System.out.println("Impl.Client Register : ");
         System.out.println(client.getPseudo());
     }
 

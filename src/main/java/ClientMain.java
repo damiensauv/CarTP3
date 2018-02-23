@@ -1,3 +1,4 @@
+import Impl.Client;
 import Interface.IChatRoom;
 import Interface.IClient;
 
