@@ -1,11 +1,17 @@
 package GUI;
 
+import Interface.IChatRoom;
+
 import javax.swing.*;
 
 public class MyFrame extends JFrame {
 
+    public IChatRoom service;
+
     // on extend la JFrame afin que l'on puisse avoir une frame principal
-    public MyFrame() {
+    public MyFrame(IChatRoom service) {
+
+        this.service = service;
 
         this.setTitle("Client RMI");
         this.setLocationRelativeTo(null);

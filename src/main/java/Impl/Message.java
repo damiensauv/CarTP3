@@ -3,6 +3,7 @@ package Impl;
 import Interface.IClient;
 import Interface.IMessage;
 
+import java.rmi.RemoteException;
 import java.util.Date;
 
 public class Message implements IMessage {
@@ -27,9 +28,13 @@ public class Message implements IMessage {
         this.client = client;
     }
 
-
     @Override
     public String toString() {
-        return "ToString => " + msg;
+        try {
+            return "[" + client.getPseudo() + "] : " + msg;
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

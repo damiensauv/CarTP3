@@ -29,7 +29,7 @@ public class Client extends UnicastRemoteObject implements IClient {
 
     @Override
     public void receive(IMessage message) throws RemoteException {
-        System.out.println("Message Yolo"); // message => ToString
+        System.out.println(message);
     }
 
 }

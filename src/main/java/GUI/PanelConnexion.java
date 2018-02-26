@@ -1,16 +1,21 @@
 package GUI;
 
+import Interface.IClient;
+
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 
 public class PanelConnexion extends MyPanel implements ActionListener {
 
 
     private JButton boutonOK, boutonAnnuler, boutonValider;
     private JLabel label, labelmdp;
-    private JTextField champtexte, champeval;
+    private JTextField champtexte;
     private JPasswordField champmdp;
 
 
@@ -23,13 +28,14 @@ public class PanelConnexion extends MyPanel implements ActionListener {
         labelmdp = new JLabel("Votre mot de passe :");
         champtexte = new JTextField(25);
         champmdp = new JPasswordField(25);
-        champeval = new JTextField(25);
         boutonOK = new JButton();
         boutonAnnuler = new JButton();
         boutonValider = new JButton();
         boutonValider.setText("Valider");
         boutonOK.setText("OK");
         boutonAnnuler.setText("Annuler");
+
+        boutonOK.addActionListener(this);
 
         this.add(label);
         this.add(champtexte);
@@ -40,6 +46,30 @@ public class PanelConnexion extends MyPanel implements ActionListener {
         this.setVisible(true);
         boutonOK.setEnabled(false);
 
+
+        champtexte.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                changed();
+            }
+
+            public void removeUpdate(DocumentEvent e) {
+                changed();
+            }
+
+            public void insertUpdate(DocumentEvent e) {
+                changed();
+            }
+
+            public void changed() {
+                if (champtexte.getText().isEmpty()) {
+                    boutonOK.setEnabled(false);
+                } else {
+                    boutonOK.setEnabled(true);
+                }
+
+            }
+        });
+
         final GridBagConstraints gbc = new GridBagConstraints();
         gbc.weightx = 1;
         gbc.weighty = 1;
@@ -48,7 +78,17 @@ public class PanelConnexion extends MyPanel implements ActionListener {
 
 
     @Override
-    public void actionPerformed(ActionEvent actionEvent) {
+    public void actionPerformed(ActionEvent e) {
 
+        Object source = e.getSource();
+        if (source == boutonOK) {
+            try {
+                IClient client = this.getMyFrame().service.connect(champtexte.getText(), String.valueOf(champmdp.getPassword()));
+                if (client != null)
+                    this.getMyFrame().switchPanel(new ChatPanel(this.getMyFrame(), client));
+            } catch (RemoteException e1) {
+                e1.printStackTrace();
+            }
+        }
     }
 }
