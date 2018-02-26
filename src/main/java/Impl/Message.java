@@ -4,18 +4,17 @@ import Interface.IClient;
 import Interface.IMessage;
 
 import java.rmi.RemoteException;
-import java.util.Date;
+import java.time.LocalTime;
 
 public class Message implements IMessage {
 
     private String msg;
     private IClient client;
-    private Date date;
+
 
     public Message(String msg, IClient client) {
         this.msg = msg;
         this.client = client;
-        this.date = new Date();
     }
 
     @Override
@@ -31,7 +30,7 @@ public class Message implements IMessage {
     @Override
     public String toString() {
         try {
-            return "[" + client.getPseudo() + "] : " + msg;
+            return "[" + client.getPseudo() + "(" + LocalTime.now() + ")] : " + msg;
         } catch (RemoteException e) {
             e.printStackTrace();
         }

@@ -1,5 +1,6 @@
 package GUI;
 
+import Impl.Client;
 import Interface.IClient;
 
 import javax.swing.*;
@@ -83,8 +84,8 @@ public class PanelConnexion extends MyPanel implements ActionListener {
         Object source = e.getSource();
         if (source == boutonOK) {
             try {
-                IClient client = this.getMyFrame().service.connect(champtexte.getText(), String.valueOf(champmdp.getPassword()));
-                if (client != null)
+                IClient client = new Client(champtexte.getText(), String.valueOf(champmdp.getPassword()));
+                if (this.getMyFrame().service.connect(client))
                     this.getMyFrame().switchPanel(new ChatPanel(this.getMyFrame(), client));
             } catch (RemoteException e1) {
                 e1.printStackTrace();

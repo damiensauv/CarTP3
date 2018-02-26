@@ -34,23 +34,25 @@ public class ChatRoomImpl extends UnicastRemoteObject implements IChatRoom {
     }
 
     @Override
-    public IClient connect(String pseudo, String pswd) throws RemoteException {
+    public boolean connect(IClient client) throws RemoteException {
+        String pseudo = client.getPseudo();
+        String pswd = client.getPassword();
+
         if (!registerClients.containsKey(pseudo)) {
             this.register(pseudo, pswd);
         } else {
             if (!(registerClients.containsKey(pseudo) && registerClients.get(pseudo).contentEquals(pswd))) {
-                return null;//password wrong
+                return false;//password wrong
             }
         }
 
-        IClient client = new Client(pseudo, pswd);
         if (!connectedClients.containsKey(pseudo)) {
             connectedClients.put(pseudo, client);
             IMessage message = new Message("[Info] : " + pseudo + " join the chat", client);
             this.send(message);
-            return client;
+            return true;
         } else {
-            return null; // already connected
+            return false; // already connected
         }
     }
 
