@@ -91,6 +91,11 @@ public class ChatRoomImpl extends UnicastRemoteObject implements IChatRoom {
     }
 
     @Override
+    public IClient getPrivateClient(String pseudo) throws RemoteException {
+        return connectedClients.get(pseudo);
+    }
+
+    @Override
     public void disconnect(IClient client) throws RemoteException {
         connectedClients.remove(client.getPseudo());
         IMessage message = new Message("[Info] : " + client.getPseudo() + " has left", serverClient);

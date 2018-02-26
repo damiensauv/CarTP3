@@ -14,4 +14,6 @@ public interface IChatRoom extends Remote {
     public boolean connect(IClient client) throws RemoteException;
 
     public void history(IClient client, Integer nb) throws RemoteException;
+
+    public IClient getPrivateClient(String pseudo) throws RemoteException;
 }

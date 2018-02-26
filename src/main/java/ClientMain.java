@@ -39,6 +39,24 @@ public class ClientMain {
                 if (line.contentEquals("#EXIT")) {
                     chatRoom.disconnect(client);
                     co = false;
+                } else if ("@".equals(line.substring(0, 1))) {
+                    line = line.substring(1, line.length());
+                    String[] split = line.split(" ", 2);
+                    // 1 le mec privée, 2 msg
+
+                    IClient privateClient = client.getClients().get(split[0]);
+                    if (privateClient == null) {
+                        privateClient = chatRoom.getPrivateClient(split[0]);
+                    }
+                    if (privateClient == null) {
+                        System.out.println("[INFO] : client Private client doesn't exit");
+                    } else {
+                        client.addClient(privateClient); // check split 1
+                        IMessage msgpriv = new Message("[PRIVATE] " + split[1], client);
+                        privateClient.receive(msgpriv);
+                    }
+
+
                 } else {
                     msg = new Message(line, client);
                     chatRoom.send(msg);
