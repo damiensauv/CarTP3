@@ -6,18 +6,24 @@ import Interface.IMessage;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ChatRoomImpl extends UnicastRemoteObject implements IChatRoom {
 
     Map<String, String> registerClients = null;
     Map<String, IClient> connectedClients = null;
+    IClient serverClient = null;
+    List<IMessage> allmsg;
 
     public ChatRoomImpl() throws RemoteException {
         super();
         registerClients = new HashMap<>();
         connectedClients = new HashMap<>();
+        serverClient = new Client("Server", "Server");
+        allmsg = new ArrayList<>();
     }
 
     @Override
@@ -28,8 +34,21 @@ public class ChatRoomImpl extends UnicastRemoteObject implements IChatRoom {
     @Override
     public void send(IMessage message) throws RemoteException {
 
-        for (Map.Entry<String, IClient> entry : connectedClients.entrySet()) {
-            entry.getValue().receive(message);
+        String msg = message.getMessage();
+        String[] splitStr = msg.split("\\s+");
+        if (splitStr[0].contentEquals("#h")) {
+            Integer n = 0;
+            try {
+                n = Integer.valueOf(splitStr[1]);
+            } catch (Exception e) {
+                n = 0;
+            }
+            this.history(message.getClient(), n);
+        } else {
+            allmsg.add(message);
+            for (Map.Entry<String, IClient> entry : connectedClients.entrySet()) {
+                entry.getValue().receive(message);
+            }
         }
     }
 
@@ -57,7 +76,24 @@ public class ChatRoomImpl extends UnicastRemoteObject implements IChatRoom {
     }
 
     @Override
-    public void disconnect(IClient client) throws RemoteException {
+    public void history(IClient client, Integer nb) throws RemoteException {
+        Integer s;
+        Integer size = allmsg.size();
+        if ((size - nb) < 0)
+            s = 0;
+        else
+            s = size - nb;
 
+        List<IMessage> tmp = allmsg.subList(s, size);
+        for (IMessage msg : tmp) {
+            client.receive(msg);
+        }
+    }
+
+    @Override
+    public void disconnect(IClient client) throws RemoteException {
+        connectedClients.remove(client.getPseudo());
+        IMessage message = new Message("[Info] : " + client.getPseudo() + " has left", serverClient);
+        this.send(message);
     }
 }
