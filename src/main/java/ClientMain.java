@@ -52,7 +52,14 @@ public class ClientMain {
                         System.out.println("[INFO] : client Private client doesn't exit");
                     } else {
                         client.addClient(privateClient); // check split 1
-                        IMessage msgpriv = new Message("[PRIVATE] " + split[1], client);
+
+                        String content;
+                        if (split.length > 1)
+                            content = split[1];
+                        else
+                            content = "";
+
+                        IMessage msgpriv = new Message("[PRIVATE] " + content, client);
                         privateClient.receive(msgpriv);
                     }
 

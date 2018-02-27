@@ -96,6 +96,15 @@ public class ChatRoomImpl extends UnicastRemoteObject implements IChatRoom {
     }
 
     @Override
+    public List<String> getClient() throws RemoteException {
+        List<String> ret = new ArrayList<>();
+        for (Map.Entry<String, IClient> entry : connectedClients.entrySet()) {
+            ret.add(entry.getKey());
+        }
+        return ret;
+    }
+
+    @Override
     public void disconnect(IClient client) throws RemoteException {
         connectedClients.remove(client.getPseudo());
         IMessage message = new Message("[Info] : " + client.getPseudo() + " has left", serverClient);

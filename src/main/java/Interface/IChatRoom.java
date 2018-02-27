@@ -2,6 +2,7 @@ package Interface;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 
 public interface IChatRoom extends Remote {
 
@@ -16,4 +17,6 @@ public interface IChatRoom extends Remote {
     public void history(IClient client, Integer nb) throws RemoteException;
 
     public IClient getPrivateClient(String pseudo) throws RemoteException;
+
+    public List<String> getClient() throws RemoteException;
 }
